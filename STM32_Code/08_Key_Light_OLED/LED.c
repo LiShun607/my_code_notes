@@ -1,0 +1,58 @@
+#include "stm32f10x.h"                  // Device header
+
+void LED_Init(void)//初始化LED灯引脚，可修改GPIOx和GPIO_Pin_x
+{
+	RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA,ENABLE);
+	
+	GPIO_InitTypeDef GPIO_Initstructure;
+	GPIO_Initstructure.GPIO_Mode = GPIO_Mode_Out_PP;
+	GPIO_Initstructure.GPIO_Pin = GPIO_Pin_1|GPIO_Pin_2;
+	GPIO_Initstructure.GPIO_Speed = GPIO_Speed_50MHz;
+	
+	GPIO_Init(GPIOA,&GPIO_Initstructure);
+	
+	GPIO_SetBits(GPIOA,GPIO_Pin_1|GPIO_Pin_2);
+}
+
+//1号灯亮/熄灯函数
+void LED1_ON(void)
+{
+	GPIO_ResetBits(GPIOA,GPIO_Pin_1);
+}
+void LED1_OFF(void)
+{
+	GPIO_SetBits(GPIOA,GPIO_Pin_1);
+}
+//1号灯电平翻转函数
+void LED1_Turn(void)
+{
+	if(GPIO_ReadOutputDataBit(GPIOA,GPIO_Pin_1) == 0)
+	{
+		GPIO_SetBits(GPIOA,GPIO_Pin_1);
+	}
+	else
+	{
+		GPIO_ResetBits(GPIOA,GPIO_Pin_1);
+	}
+}
+//2号灯亮/熄灯函数
+void LED2_ON(void)
+{
+	GPIO_ResetBits(GPIOA,GPIO_Pin_2);
+}
+void LED2_OFF(void)
+{
+	GPIO_SetBits(GPIOA,GPIO_Pin_2);
+}
+//2号灯电平翻转函数
+void LED2_Turn(void)
+{
+	if(GPIO_ReadOutputDataBit(GPIOA,GPIO_Pin_2) == 0)
+	{
+		GPIO_SetBits(GPIOA,GPIO_Pin_2);
+	}
+	else
+	{
+		GPIO_ResetBits(GPIOA,GPIO_Pin_2);
+	}
+}
